@@ -26,72 +26,83 @@
     header {
       display: flex;
       align-items: center;
-      padding: 0 28px;
-      height: 56px;
+      padding: 0 42px;
+      height: 84px;
       flex-shrink: 0;
       border-bottom: 1px solid rgba(247, 247, 240, 0.18);
       position: relative;
     }
 
     .logo {
-      height: 36px;
+      height: 54px;
       width: auto;
       display: block;
     }
 
+    /* ── Centered title with inline dropdown ── */
     .header-title {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
       font-family: 'PT Serif Caption', serif;
-      font-size: 16px;
+      font-size: 24px;
       font-weight: 700;
       color: #f7f7f0;
       white-space: nowrap;
       letter-spacing: 0.01em;
-    }
-
-    nav {
-      margin-left: auto;
-      position: relative;
-      min-width: 200px;
       display: flex;
-      justify-content: center;
+      align-items: center;
+      gap: 0;
     }
 
-    .dropdown-btn {
+    .title-static {
+      margin-right: 0.25em;
+    }
+
+    .title-dropdown-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .title-trigger {
       font-family: 'PT Serif Caption', serif;
-      font-size: 15px;
+      font-size: 24px;
+      font-weight: 700;
       color: #f7f7f0;
       background: none;
       border: none;
       cursor: pointer;
-      display: flex;
+      padding: 0;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 6px 0;
+      gap: 6px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1.5px;
       letter-spacing: 0.01em;
     }
 
-    .dropdown-btn svg {
+    .title-trigger svg {
       transition: transform 0.2s ease;
+      flex-shrink: 0;
     }
 
-    .dropdown-btn.open svg {
+    .title-trigger.open svg {
       transform: rotate(180deg);
     }
 
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      left: auto;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
       background-color: #051C40;
       border: 1px solid rgba(247, 247, 240, 0.18);
       border-radius: 4px;
-      min-width: 200px;
-      max-height: 320px;
+      min-width: 220px;
+      max-height: 340px;
       overflow-y: auto;
       z-index: 100;
     }
@@ -116,9 +127,9 @@
     .dropdown-menu li {
       list-style: none;
       font-family: 'PT Serif Caption', serif;
-      font-size: 14px;
+      font-size: 21px;
       color: #f7f7f0;
-      padding: 9px 16px;
+      padding: 10px 16px;
       cursor: pointer;
       transition: background-color 0.1s ease;
       text-align: center;
@@ -126,6 +137,10 @@
 
     .dropdown-menu li:hover {
       background-color: rgba(247, 247, 240, 0.08);
+    }
+
+    .dropdown-menu li.active {
+      background-color: rgba(247, 247, 240, 0.12);
     }
 
     /* ── Map area ── */
@@ -151,7 +166,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'FF Good Pro News', 'FF Good Pro', 'Good Pro', sans-serif;
+      font-family: 'PT Serif Caption', serif;
       font-size: 14px;
       font-weight: 700;
       color: #051C40;
@@ -174,16 +189,19 @@
 
   <header>
     <img src="logo.png" alt="Logo" class="logo">
-    <span class="header-title">Election Safeguards</span>
-    <nav>
-      <button class="dropdown-btn" id="statesBtn" aria-haspopup="listbox" aria-expanded="false">
-        Choose your state
-        <svg width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 1L5.5 6L10 1" stroke="#f7f7f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <ul class="dropdown-menu" id="statesMenu" role="listbox"></ul>
-    </nav>
+
+    <div class="header-title">
+      <span class="title-static">Election Safeguards in</span>
+      <div class="title-dropdown-wrapper">
+        <button class="title-trigger" id="statesBtn" aria-haspopup="listbox" aria-expanded="false">
+          <span id="selectedLabel">America</span>
+          <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L6.5 7L12 1" stroke="#f7f7f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="dropdown-menu" id="statesMenu" role="listbox"></ul>
+      </div>
+    </div>
   </header>
 
   <main>
@@ -192,57 +210,57 @@
 
   <script>
     const stateData = [
-      { abbr: 'AK', name: 'Alaska',        row: 0, col: 0 },
-      { abbr: 'ME', name: 'Maine',          row: 0, col: 10 },
-      { abbr: 'WI', name: 'Wisconsin',      row: 1, col: 5 },
-      { abbr: 'VT', name: 'Vermont',        row: 1, col: 9 },
-      { abbr: 'NH', name: 'New Hampshire',  row: 1, col: 10 },
-      { abbr: 'WA', name: 'Washington',     row: 2, col: 0 },
-      { abbr: 'ID', name: 'Idaho',          row: 2, col: 1 },
-      { abbr: 'MT', name: 'Montana',        row: 2, col: 2 },
-      { abbr: 'ND', name: 'North Dakota',   row: 2, col: 3 },
-      { abbr: 'MN', name: 'Minnesota',      row: 2, col: 4 },
-      { abbr: 'IL', name: 'Illinois',       row: 2, col: 5 },
-      { abbr: 'MI', name: 'Michigan',       row: 2, col: 6 },
-      { abbr: 'NY', name: 'New York',       row: 2, col: 8 },
-      { abbr: 'MA', name: 'Massachusetts',  row: 2, col: 9 },
-      { abbr: 'OR', name: 'Oregon',         row: 3, col: 0 },
-      { abbr: 'NV', name: 'Nevada',         row: 3, col: 1 },
-      { abbr: 'WY', name: 'Wyoming',        row: 3, col: 2 },
-      { abbr: 'SD', name: 'South Dakota',   row: 3, col: 3 },
-      { abbr: 'IA', name: 'Iowa',           row: 3, col: 4 },
-      { abbr: 'IN', name: 'Indiana',        row: 3, col: 5 },
-      { abbr: 'OH', name: 'Ohio',           row: 3, col: 6 },
-      { abbr: 'PA', name: 'Pennsylvania',   row: 3, col: 7 },
-      { abbr: 'NJ', name: 'New Jersey',     row: 3, col: 8 },
-      { abbr: 'CT', name: 'Connecticut',    row: 3, col: 9 },
-      { abbr: 'RI', name: 'Rhode Island',   row: 3, col: 10 },
-      { abbr: 'CA', name: 'California',     row: 4, col: 0 },
-      { abbr: 'UT', name: 'Utah',           row: 4, col: 1 },
-      { abbr: 'CO', name: 'Colorado',       row: 4, col: 2 },
-      { abbr: 'NE', name: 'Nebraska',       row: 4, col: 3 },
-      { abbr: 'MO', name: 'Missouri',       row: 4, col: 4 },
-      { abbr: 'KY', name: 'Kentucky',       row: 4, col: 5 },
-      { abbr: 'WV', name: 'West Virginia',  row: 4, col: 6 },
-      { abbr: 'VA', name: 'Virginia',       row: 4, col: 7 },
-      { abbr: 'MD', name: 'Maryland',       row: 4, col: 8 },
-      { abbr: 'DE', name: 'Delaware',       row: 4, col: 9 },
-      { abbr: 'AZ', name: 'Arizona',        row: 5, col: 1 },
-      { abbr: 'NM', name: 'New Mexico',     row: 5, col: 2 },
-      { abbr: 'KS', name: 'Kansas',         row: 5, col: 3 },
-      { abbr: 'AR', name: 'Arkansas',       row: 5, col: 4 },
-      { abbr: 'TN', name: 'Tennessee',      row: 5, col: 5 },
-      { abbr: 'NC', name: 'North Carolina', row: 5, col: 6 },
-      { abbr: 'SC', name: 'South Carolina', row: 5, col: 7 },
-      { abbr: 'DC', name: 'Washington D.C.',row: 5, col: 8 },
-      { abbr: 'OK', name: 'Oklahoma',       row: 6, col: 3 },
-      { abbr: 'LA', name: 'Louisiana',      row: 6, col: 4 },
-      { abbr: 'MS', name: 'Mississippi',    row: 6, col: 5 },
-      { abbr: 'AL', name: 'Alabama',        row: 6, col: 6 },
-      { abbr: 'GA', name: 'Georgia',        row: 6, col: 7 },
-      { abbr: 'HI', name: 'Hawaii',         row: 7, col: 0 },
-      { abbr: 'TX', name: 'Texas',          row: 7, col: 3 },
-      { abbr: 'FL', name: 'Florida',        row: 7, col: 8 },
+      { abbr: 'AK', name: 'Alaska',           row: 0, col: 0 },
+      { abbr: 'ME', name: 'Maine',             row: 0, col: 10 },
+      { abbr: 'WI', name: 'Wisconsin',         row: 1, col: 5 },
+      { abbr: 'VT', name: 'Vermont',           row: 1, col: 9 },
+      { abbr: 'NH', name: 'New Hampshire',     row: 1, col: 10 },
+      { abbr: 'WA', name: 'Washington',        row: 2, col: 0 },
+      { abbr: 'ID', name: 'Idaho',             row: 2, col: 1 },
+      { abbr: 'MT', name: 'Montana',           row: 2, col: 2 },
+      { abbr: 'ND', name: 'North Dakota',      row: 2, col: 3 },
+      { abbr: 'MN', name: 'Minnesota',         row: 2, col: 4 },
+      { abbr: 'IL', name: 'Illinois',          row: 2, col: 5 },
+      { abbr: 'MI', name: 'Michigan',          row: 2, col: 6 },
+      { abbr: 'NY', name: 'New York',          row: 2, col: 8 },
+      { abbr: 'MA', name: 'Massachusetts',     row: 2, col: 9 },
+      { abbr: 'OR', name: 'Oregon',            row: 3, col: 0 },
+      { abbr: 'NV', name: 'Nevada',            row: 3, col: 1 },
+      { abbr: 'WY', name: 'Wyoming',           row: 3, col: 2 },
+      { abbr: 'SD', name: 'South Dakota',      row: 3, col: 3 },
+      { abbr: 'IA', name: 'Iowa',              row: 3, col: 4 },
+      { abbr: 'IN', name: 'Indiana',           row: 3, col: 5 },
+      { abbr: 'OH', name: 'Ohio',              row: 3, col: 6 },
+      { abbr: 'PA', name: 'Pennsylvania',      row: 3, col: 7 },
+      { abbr: 'NJ', name: 'New Jersey',        row: 3, col: 8 },
+      { abbr: 'CT', name: 'Connecticut',       row: 3, col: 9 },
+      { abbr: 'RI', name: 'Rhode Island',      row: 3, col: 10 },
+      { abbr: 'CA', name: 'California',        row: 4, col: 0 },
+      { abbr: 'UT', name: 'Utah',              row: 4, col: 1 },
+      { abbr: 'CO', name: 'Colorado',          row: 4, col: 2 },
+      { abbr: 'NE', name: 'Nebraska',          row: 4, col: 3 },
+      { abbr: 'MO', name: 'Missouri',          row: 4, col: 4 },
+      { abbr: 'KY', name: 'Kentucky',          row: 4, col: 5 },
+      { abbr: 'WV', name: 'West Virginia',     row: 4, col: 6 },
+      { abbr: 'VA', name: 'Virginia',          row: 4, col: 7 },
+      { abbr: 'MD', name: 'Maryland',          row: 4, col: 8 },
+      { abbr: 'DE', name: 'Delaware',          row: 4, col: 9 },
+      { abbr: 'AZ', name: 'Arizona',           row: 5, col: 1 },
+      { abbr: 'NM', name: 'New Mexico',        row: 5, col: 2 },
+      { abbr: 'KS', name: 'Kansas',            row: 5, col: 3 },
+      { abbr: 'AR', name: 'Arkansas',          row: 5, col: 4 },
+      { abbr: 'TN', name: 'Tennessee',         row: 5, col: 5 },
+      { abbr: 'NC', name: 'North Carolina',    row: 5, col: 6 },
+      { abbr: 'SC', name: 'South Carolina',    row: 5, col: 7 },
+      { abbr: 'DC', name: 'Washington D.C.',   row: 5, col: 8 },
+      { abbr: 'OK', name: 'Oklahoma',          row: 6, col: 3 },
+      { abbr: 'LA', name: 'Louisiana',         row: 6, col: 4 },
+      { abbr: 'MS', name: 'Mississippi',       row: 6, col: 5 },
+      { abbr: 'AL', name: 'Alabama',           row: 6, col: 6 },
+      { abbr: 'GA', name: 'Georgia',           row: 6, col: 7 },
+      { abbr: 'HI', name: 'Hawaii',            row: 7, col: 0 },
+      { abbr: 'TX', name: 'Texas',             row: 7, col: 3 },
+      { abbr: 'FL', name: 'Florida',           row: 7, col: 8 },
     ];
 
     /* ── Build map tiles ── */
@@ -256,8 +274,18 @@
       map.appendChild(tile);
     });
 
-    /* ── Build dropdown list (alphabetical by state name, 50 states only) ── */
+    /* ── Build dropdown list ── */
     const menu = document.getElementById('statesMenu');
+    const label = document.getElementById('selectedLabel');
+    const btn = document.getElementById('statesBtn');
+
+    const americaItem = document.createElement('li');
+    americaItem.textContent = 'America';
+    americaItem.setAttribute('role', 'option');
+    americaItem.classList.add('active');
+    americaItem.addEventListener('click', () => select('America'));
+    menu.appendChild(americaItem);
+
     const sorted = [...stateData]
       .filter(s => s.abbr !== 'DC')
       .sort((a, b) => a.name.localeCompare(b.name));
@@ -266,11 +294,24 @@
       const li = document.createElement('li');
       li.textContent = name;
       li.setAttribute('role', 'option');
+      li.addEventListener('click', () => select(name));
       menu.appendChild(li);
     });
 
-    /* ── Dropdown toggle ── */
-    const btn = document.getElementById('statesBtn');
+    function select(name) {
+      label.textContent = name;
+      menu.querySelectorAll('li').forEach(li => {
+        li.classList.toggle('active', li.textContent === name);
+      });
+      closeMenu();
+    }
+
+    function closeMenu() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+    }
+
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = menu.classList.toggle('open');
@@ -278,12 +319,7 @@
       btn.setAttribute('aria-expanded', isOpen);
     });
 
-    document.addEventListener('click', () => {
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded', false);
-    });
-
+    document.addEventListener('click', closeMenu);
     menu.addEventListener('click', (e) => e.stopPropagation());
   </script>
 </body>
