@@ -39,8 +39,20 @@
       display: block;
     }
 
+    .header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'PT Serif Caption', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f7f7f0;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+
     nav {
-      margin-left: 32px;
+      margin-left: auto;
       position: relative;
     }
 
@@ -121,21 +133,21 @@
 
     #map {
       display: grid;
-      grid-template-columns: repeat(11, 52px);
-      grid-template-rows: repeat(8, 52px);
-      gap: 5px;
+      grid-template-columns: repeat(11, 68px);
+      grid-template-rows: repeat(8, 68px);
+      gap: 7px;
     }
 
     .tile {
-      width: 52px;
-      height: 52px;
+      width: 68px;
+      height: 68px;
       background-color: #f7f7f0;
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'FF Good Pro News', 'FF Good Pro', 'Good Pro', sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 400;
       color: #051C40;
       cursor: pointer;
@@ -157,6 +169,7 @@
 
   <header>
     <img src="logo.png" alt="Logo" class="logo">
+    <span class="header-title">Election Safeguards</span>
     <nav>
       <button class="dropdown-btn" id="statesBtn" aria-haspopup="listbox" aria-expanded="false">
         States
