@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>States United</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif+Caption&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -15,9 +18,105 @@
       background-color: #051C40;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      height: 56px;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(247, 247, 240, 0.18);
+      position: relative;
+    }
+
+    .logo {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    nav {
+      margin-left: 32px;
+      position: relative;
+    }
+
+    .dropdown-btn {
+      font-family: 'PT Serif Caption', serif;
+      font-size: 15px;
+      color: #f7f7f0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 0;
+      letter-spacing: 0.01em;
+    }
+
+    .dropdown-btn svg {
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown-btn.open svg {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      background-color: #051C40;
+      border: 1px solid rgba(247, 247, 240, 0.18);
+      border-radius: 4px;
+      min-width: 200px;
+      max-height: 320px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .dropdown-menu.open {
+      display: block;
+    }
+
+    .dropdown-menu::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-thumb {
+      background: rgba(247, 247, 240, 0.25);
+      border-radius: 2px;
+    }
+
+    .dropdown-menu li {
+      list-style: none;
+      font-family: 'PT Serif Caption', serif;
+      font-size: 14px;
+      color: #f7f7f0;
+      padding: 9px 16px;
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+    }
+
+    .dropdown-menu li:hover {
+      background-color: rgba(247, 247, 240, 0.08);
+    }
+
+    /* ── Map area ── */
+    main {
+      flex: 1;
+      display: flex;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
 
     #map {
@@ -35,13 +134,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: 'FF Good Pro News', 'FF Good Pro', 'Good Pro', sans-serif;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 400;
       color: #051C40;
       cursor: pointer;
       transition: background-color 0.15s ease, transform 0.15s ease;
       letter-spacing: 0.03em;
       user-select: none;
+      text-transform: uppercase;
     }
 
     .tile:hover {
@@ -53,66 +154,82 @@
   </style>
 </head>
 <body>
-  <div id="map"></div>
+
+  <header>
+    <img src="logo.png" alt="Logo" class="logo">
+    <nav>
+      <button class="dropdown-btn" id="statesBtn" aria-haspopup="listbox" aria-expanded="false">
+        States
+        <svg width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5.5 6L10 1" stroke="#f7f7f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <ul class="dropdown-menu" id="statesMenu" role="listbox"></ul>
+    </nav>
+  </header>
+
+  <main>
+    <div id="map"></div>
+  </main>
 
   <script>
-    const states = [
-      { abbr: 'AK', row: 0, col: 0 },
-      { abbr: 'ME', row: 0, col: 10 },
-      { abbr: 'WI', row: 1, col: 5 },
-      { abbr: 'VT', row: 1, col: 9 },
-      { abbr: 'NH', row: 1, col: 10 },
-      { abbr: 'WA', row: 2, col: 0 },
-      { abbr: 'ID', row: 2, col: 1 },
-      { abbr: 'MT', row: 2, col: 2 },
-      { abbr: 'ND', row: 2, col: 3 },
-      { abbr: 'MN', row: 2, col: 4 },
-      { abbr: 'IL', row: 2, col: 5 },
-      { abbr: 'MI', row: 2, col: 6 },
-      { abbr: 'NY', row: 2, col: 8 },
-      { abbr: 'MA', row: 2, col: 9 },
-      { abbr: 'OR', row: 3, col: 0 },
-      { abbr: 'NV', row: 3, col: 1 },
-      { abbr: 'WY', row: 3, col: 2 },
-      { abbr: 'SD', row: 3, col: 3 },
-      { abbr: 'IA', row: 3, col: 4 },
-      { abbr: 'IN', row: 3, col: 5 },
-      { abbr: 'OH', row: 3, col: 6 },
-      { abbr: 'PA', row: 3, col: 7 },
-      { abbr: 'NJ', row: 3, col: 8 },
-      { abbr: 'CT', row: 3, col: 9 },
-      { abbr: 'RI', row: 3, col: 10 },
-      { abbr: 'CA', row: 4, col: 0 },
-      { abbr: 'UT', row: 4, col: 1 },
-      { abbr: 'CO', row: 4, col: 2 },
-      { abbr: 'NE', row: 4, col: 3 },
-      { abbr: 'MO', row: 4, col: 4 },
-      { abbr: 'KY', row: 4, col: 5 },
-      { abbr: 'WV', row: 4, col: 6 },
-      { abbr: 'VA', row: 4, col: 7 },
-      { abbr: 'MD', row: 4, col: 8 },
-      { abbr: 'DE', row: 4, col: 9 },
-      { abbr: 'AZ', row: 5, col: 1 },
-      { abbr: 'NM', row: 5, col: 2 },
-      { abbr: 'KS', row: 5, col: 3 },
-      { abbr: 'AR', row: 5, col: 4 },
-      { abbr: 'TN', row: 5, col: 5 },
-      { abbr: 'NC', row: 5, col: 6 },
-      { abbr: 'SC', row: 5, col: 7 },
-      { abbr: 'DC', row: 5, col: 8 },
-      { abbr: 'OK', row: 6, col: 3 },
-      { abbr: 'LA', row: 6, col: 4 },
-      { abbr: 'MS', row: 6, col: 5 },
-      { abbr: 'AL', row: 6, col: 6 },
-      { abbr: 'GA', row: 6, col: 7 },
-      { abbr: 'HI', row: 7, col: 0 },
-      { abbr: 'TX', row: 7, col: 3 },
-      { abbr: 'FL', row: 7, col: 8 },
+    const stateData = [
+      { abbr: 'AK', name: 'Alaska',        row: 0, col: 0 },
+      { abbr: 'ME', name: 'Maine',          row: 0, col: 10 },
+      { abbr: 'WI', name: 'Wisconsin',      row: 1, col: 5 },
+      { abbr: 'VT', name: 'Vermont',        row: 1, col: 9 },
+      { abbr: 'NH', name: 'New Hampshire',  row: 1, col: 10 },
+      { abbr: 'WA', name: 'Washington',     row: 2, col: 0 },
+      { abbr: 'ID', name: 'Idaho',          row: 2, col: 1 },
+      { abbr: 'MT', name: 'Montana',        row: 2, col: 2 },
+      { abbr: 'ND', name: 'North Dakota',   row: 2, col: 3 },
+      { abbr: 'MN', name: 'Minnesota',      row: 2, col: 4 },
+      { abbr: 'IL', name: 'Illinois',       row: 2, col: 5 },
+      { abbr: 'MI', name: 'Michigan',       row: 2, col: 6 },
+      { abbr: 'NY', name: 'New York',       row: 2, col: 8 },
+      { abbr: 'MA', name: 'Massachusetts',  row: 2, col: 9 },
+      { abbr: 'OR', name: 'Oregon',         row: 3, col: 0 },
+      { abbr: 'NV', name: 'Nevada',         row: 3, col: 1 },
+      { abbr: 'WY', name: 'Wyoming',        row: 3, col: 2 },
+      { abbr: 'SD', name: 'South Dakota',   row: 3, col: 3 },
+      { abbr: 'IA', name: 'Iowa',           row: 3, col: 4 },
+      { abbr: 'IN', name: 'Indiana',        row: 3, col: 5 },
+      { abbr: 'OH', name: 'Ohio',           row: 3, col: 6 },
+      { abbr: 'PA', name: 'Pennsylvania',   row: 3, col: 7 },
+      { abbr: 'NJ', name: 'New Jersey',     row: 3, col: 8 },
+      { abbr: 'CT', name: 'Connecticut',    row: 3, col: 9 },
+      { abbr: 'RI', name: 'Rhode Island',   row: 3, col: 10 },
+      { abbr: 'CA', name: 'California',     row: 4, col: 0 },
+      { abbr: 'UT', name: 'Utah',           row: 4, col: 1 },
+      { abbr: 'CO', name: 'Colorado',       row: 4, col: 2 },
+      { abbr: 'NE', name: 'Nebraska',       row: 4, col: 3 },
+      { abbr: 'MO', name: 'Missouri',       row: 4, col: 4 },
+      { abbr: 'KY', name: 'Kentucky',       row: 4, col: 5 },
+      { abbr: 'WV', name: 'West Virginia',  row: 4, col: 6 },
+      { abbr: 'VA', name: 'Virginia',       row: 4, col: 7 },
+      { abbr: 'MD', name: 'Maryland',       row: 4, col: 8 },
+      { abbr: 'DE', name: 'Delaware',       row: 4, col: 9 },
+      { abbr: 'AZ', name: 'Arizona',        row: 5, col: 1 },
+      { abbr: 'NM', name: 'New Mexico',     row: 5, col: 2 },
+      { abbr: 'KS', name: 'Kansas',         row: 5, col: 3 },
+      { abbr: 'AR', name: 'Arkansas',       row: 5, col: 4 },
+      { abbr: 'TN', name: 'Tennessee',      row: 5, col: 5 },
+      { abbr: 'NC', name: 'North Carolina', row: 5, col: 6 },
+      { abbr: 'SC', name: 'South Carolina', row: 5, col: 7 },
+      { abbr: 'DC', name: 'Washington D.C.',row: 5, col: 8 },
+      { abbr: 'OK', name: 'Oklahoma',       row: 6, col: 3 },
+      { abbr: 'LA', name: 'Louisiana',      row: 6, col: 4 },
+      { abbr: 'MS', name: 'Mississippi',    row: 6, col: 5 },
+      { abbr: 'AL', name: 'Alabama',        row: 6, col: 6 },
+      { abbr: 'GA', name: 'Georgia',        row: 6, col: 7 },
+      { abbr: 'HI', name: 'Hawaii',         row: 7, col: 0 },
+      { abbr: 'TX', name: 'Texas',          row: 7, col: 3 },
+      { abbr: 'FL', name: 'Florida',        row: 7, col: 8 },
     ];
 
+    /* ── Build map tiles ── */
     const map = document.getElementById('map');
-
-    states.forEach(({ abbr, row, col }) => {
+    stateData.forEach(({ abbr, row, col }) => {
       const tile = document.createElement('div');
       tile.className = 'tile';
       tile.textContent = abbr;
@@ -120,6 +237,36 @@
       tile.style.gridRow = row + 1;
       map.appendChild(tile);
     });
+
+    /* ── Build dropdown list (alphabetical by state name, 50 states only) ── */
+    const menu = document.getElementById('statesMenu');
+    const sorted = [...stateData]
+      .filter(s => s.abbr !== 'DC')
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    sorted.forEach(({ name }) => {
+      const li = document.createElement('li');
+      li.textContent = name;
+      li.setAttribute('role', 'option');
+      menu.appendChild(li);
+    });
+
+    /* ── Dropdown toggle ── */
+    const btn = document.getElementById('statesBtn');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menu.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+    });
+
+    menu.addEventListener('click', (e) => e.stopPropagation());
   </script>
 </body>
 </html>
