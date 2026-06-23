@@ -54,6 +54,9 @@
     nav {
       margin-left: auto;
       position: relative;
+      min-width: 200px;
+      display: flex;
+      justify-content: center;
     }
 
     .dropdown-btn {
@@ -82,7 +85,8 @@
       display: none;
       position: absolute;
       top: calc(100% + 10px);
-      left: 0;
+      right: 0;
+      left: auto;
       background-color: #051C40;
       border: 1px solid rgba(247, 247, 240, 0.18);
       border-radius: 4px;
@@ -117,6 +121,7 @@
       padding: 9px 16px;
       cursor: pointer;
       transition: background-color 0.1s ease;
+      text-align: center;
     }
 
     .dropdown-menu li:hover {
@@ -148,7 +153,7 @@
       justify-content: center;
       font-family: 'FF Good Pro News', 'FF Good Pro', 'Good Pro', sans-serif;
       font-size: 14px;
-      font-weight: 400;
+      font-weight: 700;
       color: #051C40;
       cursor: pointer;
       transition: background-color 0.15s ease, transform 0.15s ease;
@@ -172,7 +177,7 @@
     <span class="header-title">Election Safeguards</span>
     <nav>
       <button class="dropdown-btn" id="statesBtn" aria-haspopup="listbox" aria-expanded="false">
-        States
+        Choose your state
         <svg width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 1L5.5 6L10 1" stroke="#f7f7f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
