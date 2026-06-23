@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>States United</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #051C40;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    #map {
+      display: grid;
+      grid-template-columns: repeat(11, 52px);
+      grid-template-rows: repeat(8, 52px);
+      gap: 5px;
+    }
+
+    .tile {
+      width: 52px;
+      height: 52px;
+      background-color: #f7f7f0;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #051C40;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.15s ease;
+      letter-spacing: 0.03em;
+      user-select: none;
+    }
+
+    .tile:hover {
+      background-color: #ffffff;
+      transform: scale(1.105);
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    const states = [
+      { abbr: 'AK', row: 0, col: 0 },
+      { abbr: 'ME', row: 0, col: 10 },
+      { abbr: 'WI', row: 1, col: 5 },
+      { abbr: 'VT', row: 1, col: 9 },
+      { abbr: 'NH', row: 1, col: 10 },
+      { abbr: 'WA', row: 2, col: 0 },
+      { abbr: 'ID', row: 2, col: 1 },
+      { abbr: 'MT', row: 2, col: 2 },
+      { abbr: 'ND', row: 2, col: 3 },
+      { abbr: 'MN', row: 2, col: 4 },
+      { abbr: 'IL', row: 2, col: 5 },
+      { abbr: 'MI', row: 2, col: 6 },
+      { abbr: 'NY', row: 2, col: 8 },
+      { abbr: 'MA', row: 2, col: 9 },
+      { abbr: 'OR', row: 3, col: 0 },
+      { abbr: 'NV', row: 3, col: 1 },
+      { abbr: 'WY', row: 3, col: 2 },
+      { abbr: 'SD', row: 3, col: 3 },
+      { abbr: 'IA', row: 3, col: 4 },
+      { abbr: 'IN', row: 3, col: 5 },
+      { abbr: 'OH', row: 3, col: 6 },
+      { abbr: 'PA', row: 3, col: 7 },
+      { abbr: 'NJ', row: 3, col: 8 },
+      { abbr: 'CT', row: 3, col: 9 },
+      { abbr: 'RI', row: 3, col: 10 },
+      { abbr: 'CA', row: 4, col: 0 },
+      { abbr: 'UT', row: 4, col: 1 },
+      { abbr: 'CO', row: 4, col: 2 },
+      { abbr: 'NE', row: 4, col: 3 },
+      { abbr: 'MO', row: 4, col: 4 },
+      { abbr: 'KY', row: 4, col: 5 },
+      { abbr: 'WV', row: 4, col: 6 },
+      { abbr: 'VA', row: 4, col: 7 },
+      { abbr: 'MD', row: 4, col: 8 },
+      { abbr: 'DE', row: 4, col: 9 },
+      { abbr: 'AZ', row: 5, col: 1 },
+      { abbr: 'NM', row: 5, col: 2 },
+      { abbr: 'KS', row: 5, col: 3 },
+      { abbr: 'AR', row: 5, col: 4 },
+      { abbr: 'TN', row: 5, col: 5 },
+      { abbr: 'NC', row: 5, col: 6 },
+      { abbr: 'SC', row: 5, col: 7 },
+      { abbr: 'DC', row: 5, col: 8 },
+      { abbr: 'OK', row: 6, col: 3 },
+      { abbr: 'LA', row: 6, col: 4 },
+      { abbr: 'MS', row: 6, col: 5 },
+      { abbr: 'AL', row: 6, col: 6 },
+      { abbr: 'GA', row: 6, col: 7 },
+      { abbr: 'HI', row: 7, col: 0 },
+      { abbr: 'TX', row: 7, col: 3 },
+      { abbr: 'FL', row: 7, col: 8 },
+    ];
+
+    const map = document.getElementById('map');
+
+    states.forEach(({ abbr, row, col }) => {
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.textContent = abbr;
+      tile.style.gridColumn = col + 1;
+      tile.style.gridRow = row + 1;
+      map.appendChild(tile);
+    });
+  </script>
+</body>
+</html>
