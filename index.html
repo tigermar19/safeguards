@@ -8,11 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=PT+Serif+Caption&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background-color: #051C40;
@@ -29,7 +25,7 @@
       padding: 0 42px;
       height: 84px;
       flex-shrink: 0;
-      border-bottom: 1px solid rgba(247, 247, 240, 0.18);
+      border-bottom: 1px solid rgba(247,247,240,0.18);
       position: sticky;
       top: 0;
       z-index: 50;
@@ -40,6 +36,7 @@
       height: 54px;
       width: auto;
       display: block;
+      cursor: pointer;
     }
 
     .header-title {
@@ -51,14 +48,11 @@
       font-weight: 700;
       color: #f7f7f0;
       white-space: nowrap;
-      letter-spacing: 0.01em;
       display: flex;
       align-items: center;
     }
 
-    .title-static {
-      margin-right: 0.25em;
-    }
+    .title-static { margin-right: 0.25em; }
 
     .title-dropdown-wrapper {
       position: relative;
@@ -82,17 +76,10 @@
       text-decoration-color: #E02126;
       text-underline-offset: 4px;
       text-decoration-thickness: 2px;
-      letter-spacing: 0.01em;
     }
 
-    .title-trigger svg {
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .title-trigger.open svg {
-      transform: rotate(180deg);
-    }
+    .title-trigger svg { transition: transform 0.2s ease; flex-shrink: 0; }
+    .title-trigger.open svg { transform: rotate(180deg); }
 
     .dropdown-menu {
       display: none;
@@ -101,30 +88,18 @@
       left: 50%;
       transform: translateX(-50%);
       background-color: #051C40;
-      border: 1px solid rgba(247, 247, 240, 0.18);
+      border: 1px solid rgba(247,247,240,0.18);
       border-radius: 4px;
       min-width: 220px;
       max-height: 340px;
       overflow-y: auto;
       z-index: 100;
     }
+    .dropdown-menu.open { display: block; }
 
-    .dropdown-menu.open {
-      display: block;
-    }
-
-    .dropdown-menu::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .dropdown-menu::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .dropdown-menu::-webkit-scrollbar-thumb {
-      background: rgba(247, 247, 240, 0.25);
-      border-radius: 2px;
-    }
+    .dropdown-menu::-webkit-scrollbar { width: 4px; }
+    .dropdown-menu::-webkit-scrollbar-track { background: transparent; }
+    .dropdown-menu::-webkit-scrollbar-thumb { background: rgba(247,247,240,0.25); border-radius: 2px; }
 
     .dropdown-menu li {
       list-style: none;
@@ -136,14 +111,8 @@
       transition: background-color 0.1s ease;
       text-align: center;
     }
-
-    .dropdown-menu li:hover {
-      background-color: rgba(247, 247, 240, 0.08);
-    }
-
-    .dropdown-menu li.active {
-      background-color: rgba(247, 247, 240, 0.12);
-    }
+    .dropdown-menu li:hover { background-color: rgba(247,247,240,0.08); }
+    .dropdown-menu li.active { background-color: rgba(247,247,240,0.12); }
 
     /* ── Progress bar ── */
     #progress-bar {
@@ -155,11 +124,9 @@
       z-index: 49;
       margin-top: -3px;
       pointer-events: none;
-      opacity: 1;
-      transform: translateY(0);
     }
 
-    /* ── Map area ── */
+    /* ── Map ── */
     main {
       display: flex;
       align-items: center;
@@ -177,7 +144,6 @@
     .tile {
       width: 68px;
       height: 68px;
-      background-color: #f7f7f0;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -185,25 +151,34 @@
       font-family: 'PT Serif Caption', serif;
       font-size: 14px;
       font-weight: 700;
-      color: #051C40;
-      cursor: pointer;
-      transition: background-color 0.15s ease, transform 0.15s ease;
       letter-spacing: 0.03em;
       user-select: none;
       text-transform: uppercase;
     }
 
-    .tile:hover {
+    .tile-active {
+      background-color: #f7f7f0;
+      color: #051C40;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+    .tile-active:hover {
       background-color: #ffffff;
       transform: scale(1.105);
       z-index: 1;
       position: relative;
     }
 
+    .tile-static {
+      background-color: #6D768B;
+      color: #051C40;
+      cursor: default;
+    }
+
     /* ── Content section ── */
     #content-section {
       width: 820px;
-      margin: 0 auto 64px;
+      margin: 0 auto;
     }
 
     #content-heading {
@@ -217,48 +192,59 @@
     .content-para {
       font-family: 'PT Serif Caption', serif;
       font-size: 15px;
-      font-weight: 400;
-      color: rgba(247, 247, 240, 0.8);
+      color: rgba(247,247,240,0.8);
       line-height: 1.75;
       margin-bottom: 18px;
-      min-height: 1.75em;
+      min-height: 1em;
     }
+    .content-para:last-of-type { margin-bottom: 0; }
 
-    .content-para:last-child {
-      margin-bottom: 0;
-    }
+    /* ── Back to top ── */
+    .back-to-top-wrapper { width: 820px; margin: 20px auto 64px; }
 
-    /* ── Footer divider ── */
-    .footer-divider {
-      width: 100%;
-      border-top: 1px solid rgba(247, 247, 240, 0.18);
+    .back-to-top {
+      display: inline-block;
+      font-family: 'PT Serif Caption', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: #f7f7f0;
+      text-decoration: underline;
+      text-decoration-color: #E02126;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 2px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
     }
+    .back-to-top:hover { opacity: 0.8; }
 
     /* ── Footer ── */
+    .footer-divider { width: 100%; border-top: 1px solid rgba(247,247,240,0.18); }
+
     footer {
       height: 84px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     footer p {
       font-family: 'PT Serif Caption', serif;
       font-size: 15px;
-      color: rgba(247, 247, 240, 0.6);
+      color: rgba(247,247,240,0.6);
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="Logo" class="logo">
+    <img src="logo.png" alt="Logo" class="logo" id="logoBtn">
     <div class="header-title">
       <span class="title-static">Election Safeguards in</span>
       <div class="title-dropdown-wrapper">
         <button class="title-trigger" id="statesBtn" aria-haspopup="listbox" aria-expanded="false">
           <span id="selectedLabel">America</span>
-          <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="13" height="8" viewBox="0 0 13 8" fill="none">
             <path d="M1 1L6.5 7L12 1" stroke="#f7f7f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
@@ -270,17 +256,81 @@
   <div id="progress-bar"></div>
 
   <main>
-    <div id="map"></div>
+    <div id="map">
+      <!-- Row 0 -->
+      <div class="tile tile-static"  style="grid-column:1;grid-row:1">AK</div>
+      <div class="tile tile-static"  style="grid-column:11;grid-row:1">ME</div>
+      <!-- Row 1 -->
+      <div class="tile tile-active"  style="grid-column:6;grid-row:2"  data-state="Wisconsin">WI</div>
+      <div class="tile tile-static"  style="grid-column:10;grid-row:2">VT</div>
+      <div class="tile tile-static"  style="grid-column:11;grid-row:2">NH</div>
+      <!-- Row 2 -->
+      <div class="tile tile-static"  style="grid-column:1;grid-row:3">WA</div>
+      <div class="tile tile-static"  style="grid-column:2;grid-row:3">ID</div>
+      <div class="tile tile-static"  style="grid-column:3;grid-row:3">MT</div>
+      <div class="tile tile-static"  style="grid-column:4;grid-row:3">ND</div>
+      <div class="tile tile-static"  style="grid-column:5;grid-row:3">MN</div>
+      <div class="tile tile-static"  style="grid-column:6;grid-row:3">IL</div>
+      <div class="tile tile-active"  style="grid-column:7;grid-row:3"  data-state="Michigan">MI</div>
+      <div class="tile tile-static"  style="grid-column:9;grid-row:3">NY</div>
+      <div class="tile tile-static"  style="grid-column:10;grid-row:3">MA</div>
+      <!-- Row 3 -->
+      <div class="tile tile-static"  style="grid-column:1;grid-row:4">OR</div>
+      <div class="tile tile-active"  style="grid-column:2;grid-row:4" data-state="Nevada">NV</div>
+      <div class="tile tile-static"  style="grid-column:3;grid-row:4">WY</div>
+      <div class="tile tile-static"  style="grid-column:4;grid-row:4">SD</div>
+      <div class="tile tile-static"  style="grid-column:5;grid-row:4">IA</div>
+      <div class="tile tile-static"  style="grid-column:6;grid-row:4">IN</div>
+      <div class="tile tile-static"  style="grid-column:7;grid-row:4">OH</div>
+      <div class="tile tile-active"  style="grid-column:8;grid-row:4"  data-state="Pennsylvania">PA</div>
+      <div class="tile tile-static"  style="grid-column:9;grid-row:4">NJ</div>
+      <div class="tile tile-static"  style="grid-column:10;grid-row:4">CT</div>
+      <div class="tile tile-static"  style="grid-column:11;grid-row:4">RI</div>
+      <!-- Row 4 -->
+      <div class="tile tile-static"  style="grid-column:1;grid-row:5">CA</div>
+      <div class="tile tile-static"  style="grid-column:2;grid-row:5">UT</div>
+      <div class="tile tile-static"  style="grid-column:3;grid-row:5">CO</div>
+      <div class="tile tile-static"  style="grid-column:4;grid-row:5">NE</div>
+      <div class="tile tile-static"  style="grid-column:5;grid-row:5">MO</div>
+      <div class="tile tile-static"  style="grid-column:6;grid-row:5">KY</div>
+      <div class="tile tile-static"  style="grid-column:7;grid-row:5">WV</div>
+      <div class="tile tile-static"  style="grid-column:8;grid-row:5">VA</div>
+      <div class="tile tile-static"  style="grid-column:9;grid-row:5">MD</div>
+      <div class="tile tile-static"  style="grid-column:10;grid-row:5">DE</div>
+      <!-- Row 5 -->
+      <div class="tile tile-active"  style="grid-column:2;grid-row:6"  data-state="Arizona">AZ</div>
+      <div class="tile tile-static"  style="grid-column:3;grid-row:6">NM</div>
+      <div class="tile tile-static"  style="grid-column:4;grid-row:6">KS</div>
+      <div class="tile tile-static"  style="grid-column:5;grid-row:6">AR</div>
+      <div class="tile tile-static"  style="grid-column:6;grid-row:6">TN</div>
+      <div class="tile tile-static"  style="grid-column:7;grid-row:6">NC</div>
+      <div class="tile tile-static"  style="grid-column:8;grid-row:6">SC</div>
+      <div class="tile tile-static"  style="grid-column:9;grid-row:6">DC</div>
+      <!-- Row 6 -->
+      <div class="tile tile-static"  style="grid-column:4;grid-row:7">OK</div>
+      <div class="tile tile-static"  style="grid-column:5;grid-row:7">LA</div>
+      <div class="tile tile-static"  style="grid-column:6;grid-row:7">MS</div>
+      <div class="tile tile-static"  style="grid-column:7;grid-row:7">AL</div>
+      <div class="tile tile-active"  style="grid-column:8;grid-row:7"  data-state="Georgia">GA</div>
+      <!-- Row 7 -->
+      <div class="tile tile-static"  style="grid-column:1;grid-row:8">HI</div>
+      <div class="tile tile-static"  style="grid-column:4;grid-row:8">TX</div>
+      <div class="tile tile-static"  style="grid-column:9;grid-row:8">FL</div>
+    </div>
   </main>
 
   <section id="content-section">
-    <h2 id="content-heading">Lorem Ipsum</h2>
+    <h2 id="content-heading">American elections are secure. Here&#39;s how we know.</h2>
     <p class="content-para" id="para-0"></p>
     <p class="content-para" id="para-1"></p>
     <p class="content-para" id="para-2"></p>
     <p class="content-para" id="para-3"></p>
     <p class="content-para" id="para-4"></p>
   </section>
+
+  <div class="back-to-top-wrapper">
+    <button class="back-to-top" id="backToTop">Back to top</button>
+  </div>
 
   <div class="footer-divider"></div>
 
@@ -289,59 +339,7 @@
   </footer>
 
   <script>
-    const stateData = [
-      { abbr: 'AK', name: 'Alaska',           row: 0, col: 0 },
-      { abbr: 'ME', name: 'Maine',             row: 0, col: 10 },
-      { abbr: 'WI', name: 'Wisconsin',         row: 1, col: 5 },
-      { abbr: 'VT', name: 'Vermont',           row: 1, col: 9 },
-      { abbr: 'NH', name: 'New Hampshire',     row: 1, col: 10 },
-      { abbr: 'WA', name: 'Washington',        row: 2, col: 0 },
-      { abbr: 'ID', name: 'Idaho',             row: 2, col: 1 },
-      { abbr: 'MT', name: 'Montana',           row: 2, col: 2 },
-      { abbr: 'ND', name: 'North Dakota',      row: 2, col: 3 },
-      { abbr: 'MN', name: 'Minnesota',         row: 2, col: 4 },
-      { abbr: 'IL', name: 'Illinois',          row: 2, col: 5 },
-      { abbr: 'MI', name: 'Michigan',          row: 2, col: 6 },
-      { abbr: 'NY', name: 'New York',          row: 2, col: 8 },
-      { abbr: 'MA', name: 'Massachusetts',     row: 2, col: 9 },
-      { abbr: 'OR', name: 'Oregon',            row: 3, col: 0 },
-      { abbr: 'NV', name: 'Nevada',            row: 3, col: 1 },
-      { abbr: 'WY', name: 'Wyoming',           row: 3, col: 2 },
-      { abbr: 'SD', name: 'South Dakota',      row: 3, col: 3 },
-      { abbr: 'IA', name: 'Iowa',              row: 3, col: 4 },
-      { abbr: 'IN', name: 'Indiana',           row: 3, col: 5 },
-      { abbr: 'OH', name: 'Ohio',              row: 3, col: 6 },
-      { abbr: 'PA', name: 'Pennsylvania',      row: 3, col: 7 },
-      { abbr: 'NJ', name: 'New Jersey',        row: 3, col: 8 },
-      { abbr: 'CT', name: 'Connecticut',       row: 3, col: 9 },
-      { abbr: 'RI', name: 'Rhode Island',      row: 3, col: 10 },
-      { abbr: 'CA', name: 'California',        row: 4, col: 0 },
-      { abbr: 'UT', name: 'Utah',              row: 4, col: 1 },
-      { abbr: 'CO', name: 'Colorado',          row: 4, col: 2 },
-      { abbr: 'NE', name: 'Nebraska',          row: 4, col: 3 },
-      { abbr: 'MO', name: 'Missouri',          row: 4, col: 4 },
-      { abbr: 'KY', name: 'Kentucky',          row: 4, col: 5 },
-      { abbr: 'WV', name: 'West Virginia',     row: 4, col: 6 },
-      { abbr: 'VA', name: 'Virginia',          row: 4, col: 7 },
-      { abbr: 'MD', name: 'Maryland',          row: 4, col: 8 },
-      { abbr: 'DE', name: 'Delaware',          row: 4, col: 9 },
-      { abbr: 'AZ', name: 'Arizona',           row: 5, col: 1 },
-      { abbr: 'NM', name: 'New Mexico',        row: 5, col: 2 },
-      { abbr: 'KS', name: 'Kansas',            row: 5, col: 3 },
-      { abbr: 'AR', name: 'Arkansas',          row: 5, col: 4 },
-      { abbr: 'TN', name: 'Tennessee',         row: 5, col: 5 },
-      { abbr: 'NC', name: 'North Carolina',    row: 5, col: 6 },
-      { abbr: 'SC', name: 'South Carolina',    row: 5, col: 7 },
-      { abbr: 'DC', name: 'Washington D.C.',   row: 5, col: 8 },
-      { abbr: 'OK', name: 'Oklahoma',          row: 6, col: 3 },
-      { abbr: 'LA', name: 'Louisiana',         row: 6, col: 4 },
-      { abbr: 'MS', name: 'Mississippi',       row: 6, col: 5 },
-      { abbr: 'AL', name: 'Alabama',           row: 6, col: 6 },
-      { abbr: 'GA', name: 'Georgia',           row: 6, col: 7 },
-      { abbr: 'HI', name: 'Hawaii',            row: 7, col: 0 },
-      { abbr: 'TX', name: 'Texas',             row: 7, col: 3 },
-      { abbr: 'FL', name: 'Florida',           row: 7, col: 8 },
-    ];
+    const INTERACTIVE = new Set(['Arizona','Georgia','Nevada','Michigan','Pennsylvania','Wisconsin']);
 
     const paragraphTexts = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -351,142 +349,146 @@
       "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus omnis voluptas assumenda est omnis dolor repellendus. Itaque earum rerum hic tenetur a sapiente delectus ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat et harum quidem rerum facilis expedita.",
     ];
 
-    const loremHeading = "Lorem Ipsum";
-    const paraEls = [0,1,2,3,4].map(i => document.getElementById('para-' + i));
+    const paraEls        = [0,1,2,3,4].map(i => document.getElementById('para-' + i));
     const contentHeading = document.getElementById('content-heading');
     const contentSection = document.getElementById('content-section');
-    const progressBar = document.getElementById('progress-bar');
-    const menu = document.getElementById('statesMenu');
-    const label = document.getElementById('selectedLabel');
-    const btn = document.getElementById('statesBtn');
+    const progressBar    = document.getElementById('progress-bar');
+    const menuEl         = document.getElementById('statesMenu');
+    const labelEl        = document.getElementById('selectedLabel');
+    const btnEl          = document.getElementById('statesBtn');
 
-    let activeTimeouts = [];
+    let pendingTimeouts = [];
 
     function cancelTyping() {
-      activeTimeouts.forEach(id => clearTimeout(id));
-      activeTimeouts = [];
+      pendingTimeouts.forEach(clearTimeout);
+      pendingTimeouts = [];
     }
 
-    function resetProgressBar() {
+    function resetBar() {
       progressBar.style.transition = 'none';
-      progressBar.style.transform = 'translateY(0)';
-      progressBar.style.opacity = '1';
-      progressBar.style.width = '0%';
+      progressBar.style.transform  = 'translateY(0)';
+      progressBar.style.opacity    = '1';
+      progressBar.style.width      = '0%';
     }
 
-    function setStaticContent() {
-      contentHeading.textContent = loremHeading;
-      paragraphTexts.forEach((text, i) => { paraEls[i].textContent = text; });
-    }
-
-    function triggerState(stateName) {
-      cancelTyping();
-      resetProgressBar();
-
-      contentHeading.textContent = stateName + "’s elections are secure. Here’s how we know.";
-      paraEls.forEach(p => { p.textContent = ''; });
-
-      contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      const WORD_DELAY = 18;
-      const wordQueue = [];
-      paragraphTexts.forEach((text, pIdx) => {
-        text.split(' ').forEach(word => wordQueue.push({ pIdx, word }));
-      });
-      const totalWords = wordQueue.length;
-      const totalDuration = totalWords * WORD_DELAY;
+    function startTypewriter() {
+      const DELAY = 18;
+      const queue = [];
+      paragraphTexts.forEach((text, pIdx) =>
+        text.split(' ').forEach(word => queue.push({ pIdx, word }))
+      );
+      const total    = queue.length;
+      const duration = total * DELAY;
 
       requestAnimationFrame(() => {
-        progressBar.style.transition = 'width ' + totalDuration + 'ms linear';
+        progressBar.style.transition = 'width ' + duration + 'ms linear';
         progressBar.style.width = '100%';
       });
 
-      wordQueue.forEach(({ pIdx, word }, i) => {
-        const id = setTimeout(() => {
+      queue.forEach(({ pIdx, word }, i) => {
+        const t = setTimeout(() => {
           const p = paraEls[pIdx];
           p.textContent += (p.textContent ? ' ' : '') + word;
-
-          if (i === totalWords - 1) {
-            const doneId = setTimeout(() => {
+          if (i === total - 1) {
+            const t2 = setTimeout(() => {
               progressBar.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
-              progressBar.style.transform = 'translateY(-3px)';
-              progressBar.style.opacity = '0';
+              progressBar.style.transform  = 'translateY(-3px)';
+              progressBar.style.opacity    = '0';
             }, 150);
-            activeTimeouts.push(doneId);
+            pendingTimeouts.push(t2);
           }
-        }, i * WORD_DELAY);
-        activeTimeouts.push(id);
+        }, i * DELAY);
+        pendingTimeouts.push(t);
       });
     }
 
-    /* ── Build map tiles ── */
-    const mapEl = document.getElementById('map');
-    stateData.forEach(({ abbr, name, row, col }) => {
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-      tile.textContent = abbr;
-      tile.style.gridColumn = col + 1;
-      tile.style.gridRow = row + 1;
+    function showAmerica() {
+      cancelTyping();
+      resetBar();
+      contentSection.style.minHeight = '';
+      contentHeading.textContent = "American elections are secure. Here’s how we know.";
+      paraEls.forEach(p => { p.textContent = ''; });
+      startTypewriter();
+    }
+
+    function showState(name) {
+      cancelTyping();
+      resetBar();
+      contentSection.style.minHeight = '';
+      contentHeading.textContent = name + "’s elections are secure. Here’s how we know.";
+
+      /* Measure full height with text, lock it, then clear for typing */
+      paraEls.forEach((p, i) => { p.textContent = paragraphTexts[i]; });
+      contentSection.style.minHeight = contentSection.scrollHeight + 'px';
+      paraEls.forEach(p => { p.textContent = ''; });
+
+      const gap = parseInt(getComputedStyle(contentHeading).marginBottom) || 20;
+      const top = contentHeading.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top - 84 - gap, behavior: 'smooth' });
+
+      startTypewriter();
+    }
+
+    /* ── Wire up tile clicks ── */
+    document.querySelectorAll('.tile-active').forEach(tile => {
       tile.addEventListener('click', () => {
-        if (name === 'Washington D.C.') return;
-        select(name);
+        const name = tile.dataset.state;
+        if (name) selectState(name);
       });
-      mapEl.appendChild(tile);
     });
 
     /* ── Build dropdown ── */
-    const americaItem = document.createElement('li');
-    americaItem.textContent = 'America';
-    americaItem.setAttribute('role', 'option');
-    americaItem.classList.add('active');
-    americaItem.addEventListener('click', () => select('America'));
-    menu.appendChild(americaItem);
-
-    const sorted = [...stateData]
-      .filter(s => s.abbr !== 'DC')
-      .sort((a, b) => a.name.localeCompare(b.name));
-
-    sorted.forEach(({ name }) => {
+    function makeItem(text, active) {
       const li = document.createElement('li');
-      li.textContent = name;
+      li.textContent = text;
       li.setAttribute('role', 'option');
-      li.addEventListener('click', () => select(name));
-      menu.appendChild(li);
-    });
+      if (active) li.classList.add('active');
+      li.addEventListener('click', () => selectState(text));
+      return li;
+    }
 
-    function select(name) {
-      label.textContent = name;
-      menu.querySelectorAll('li').forEach(li => {
-        li.classList.toggle('active', li.textContent === name);
-      });
+    menuEl.appendChild(makeItem('America', true));
+    ['Arizona','Georgia','Michigan','Nevada','Pennsylvania','Wisconsin'].forEach(n =>
+      menuEl.appendChild(makeItem(n, false))
+    );
+
+    function selectState(name) {
+      labelEl.textContent = name;
+      menuEl.querySelectorAll('li').forEach(li =>
+        li.classList.toggle('active', li.textContent === name)
+      );
       closeMenu();
-
-      if (name === 'America') {
-        cancelTyping();
-        resetProgressBar();
-        setStaticContent();
-      } else {
-        triggerState(name);
-      }
+      if (name === 'America') showAmerica();
+      else showState(name);
     }
 
     function closeMenu() {
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded', false);
+      menuEl.classList.remove('open');
+      btnEl.classList.remove('open');
+      btnEl.setAttribute('aria-expanded', 'false');
     }
 
-    btn.addEventListener('click', (e) => {
+    btnEl.addEventListener('click', e => {
       e.stopPropagation();
-      const isOpen = menu.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen);
+      const open = menuEl.classList.toggle('open');
+      btnEl.classList.toggle('open', open);
+      btnEl.setAttribute('aria-expanded', String(open));
     });
 
     document.addEventListener('click', closeMenu);
-    menu.addEventListener('click', (e) => e.stopPropagation());
+    menuEl.addEventListener('click', e => e.stopPropagation());
 
-    setStaticContent();
+    document.getElementById('logoBtn').addEventListener('click', () => {
+      selectState('America');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('backToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ── Initial load ── */
+    showAmerica();
   </script>
 </body>
 </html>
