@@ -179,6 +179,7 @@
     #content-section {
       width: 820px;
       margin: 0 auto;
+      min-height: 820px;
     }
 
     #content-heading {
@@ -405,8 +406,7 @@
     function showAmerica() {
       cancelTyping();
       resetBar();
-      contentSection.style.minHeight = '';
-      contentHeading.textContent = "American elections are secure. Here’s how we know.";
+      contentHeading.textContent = "American elections are secure. Here's how we know.";
       paraEls.forEach(p => { p.textContent = ''; });
       startTypewriter();
     }
@@ -414,12 +414,7 @@
     function showState(name) {
       cancelTyping();
       resetBar();
-      contentSection.style.minHeight = '';
-      contentHeading.textContent = name + "’s elections are secure. Here’s how we know.";
-
-      /* Measure full height with text, lock it, then clear for typing */
-      paraEls.forEach((p, i) => { p.textContent = paragraphTexts[i]; });
-      contentSection.style.minHeight = contentSection.scrollHeight + 'px';
+      contentHeading.textContent = name + "'s elections are secure. Here's how we know.";
       paraEls.forEach(p => { p.textContent = ''; });
 
       const gap = parseInt(getComputedStyle(contentHeading).marginBottom) || 20;
